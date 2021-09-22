@@ -29,7 +29,7 @@ def plot_table(df):
 
 def get_product_name(id):
     if type(id) == str:
-        return df2[df2['ProductID'] == i]['ProductName'].values[0]
+        return df2[df2['ProductID'] == id]['ProductName'].values[0]
     elif type(id) == list:
         return [df2[df2['ProductID'] == i]['ProductName'].values[0] for i in id]
     else:
