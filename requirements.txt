@@ -1,7 +1,7 @@
 # packages in environment at E:\anaconda\envs\psh:
 #
 # Name                    Version                   Build  Channel
-abseil-cpp                20210324.2           h0e60522_0    conda-forge
+abseil-cpp                20210324.2  
 altair                    4.1.0                      py_1    conda-forge
 argh                      0.26.2          pyh9f0ad1d_1002    conda-forge
 argon2-cffi               20.1.0           py39hb82d6ee_2    conda-forge
