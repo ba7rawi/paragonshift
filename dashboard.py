@@ -153,7 +153,7 @@ elif page == pages[3]:
     products_series = df3.groupby(['OrderID'])['ProductName'].transform(lambda x : ','.join(x))
 
 
-    asscociation_dic = dict(zip(df['ProductID'].unique(), [0]*df['ProductName'].unique().shape[0])) 
+    asscociation_dic = dict(zip(df3['ProductName'].unique(), [0]*df3['ProductName'].unique().shape[0])) 
 
     for prod in products_series:
         prod_list = prod.split(',')
