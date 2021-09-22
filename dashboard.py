@@ -27,6 +27,14 @@ def plot_table(df):
     ])
     st.plotly_chart(fig, use_container_width=True)
 
+def get_product_name(id):
+    if type(id) == str:
+        return df2[df2['ProductID'] == i]['ProductName'].values[0]
+    elif type(id) == list:
+        return [df2[df2['ProductID'] == i]['ProductName'].values[0] for i in id]
+    else:
+        return "Invalid Id Type"
+    
 df = pd.read_excel('Data.xlsx')
 df2 = pd.read_excel('Data.xlsx', 'Products')
 
@@ -60,7 +68,6 @@ if page == pages[0]:
     # 3
     st.markdown("<hr/>",unsafe_allow_html=True)
     df1 = df
-    df2 = pd.read_excel('Data.xlsx', 'Products')
     df3 = df1.merge(df2,on='ProductID',how='left')
     d_cat = ((df3.groupby(['CategoryID']).sum()['Sales']/df3['Sales'].sum()) * 100).sort_values(ascending=False)
     fig1 = go.Figure(data=[go.Bar(x=d_cat.index.tolist(), y=d_cat.values)])
@@ -121,18 +128,18 @@ elif page == pages[3]:
     with kpi2:
         mdp = df.groupby(['ProductID']).sum()['Discount'].sort_values(ascending=False)[:1]
         st.markdown(f"### The Most Discounted Prodcut")
-        st.markdown(f"<h2 style='text-align: center;color: #d8e131;background-color: #1a322d; width: fit-content; padding:20px'>{mdp.index[0]}: {curr(mdp[0])}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='text-align: center;color: #d8e131;background-color: #1a322d; width: fit-content; padding:20px'>{get_product_names(mdp.index[0])}: {curr(mdp[0])}</h1>", unsafe_allow_html=True)
     
     with kpi3:
         mpp = df.groupby(['ProductID']).sum()['GrossProfit'].sort_values(ascending=False)[:1]
         st.markdown(f"### The Most Profitable Product")
-        st.markdown(f"<h2 style='text-align: center;color: #d8e131;background-color: #1a322d; width: fit-content; padding:20px'>{mpp.index[0]}: {curr(mpp[0])}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='text-align: center;color: #d8e131;background-color: #1a322d; width: fit-content; padding:20px'>{get_product_names(mpp.index[0])}: {curr(mpp[0])}</h1>", unsafe_allow_html=True)
 
     st.markdown("<hr/>",unsafe_allow_html=True)
     st.markdown('## The Best N Selling Products')
     n = st.slider('Choose N:', 1, df['ProductID'].unique().shape[0], 5)
     best5 = df.groupby(['ProductID']).sum()['Sales'].sort_values(ascending=False)[:n]
-    names = [df2[df2['ProductID'] == i]['ProductName'].values[0] for i in best5.index.tolist()]
+    names = get_product_names(best5.index.tolist())
 
     st.markdown(f'# Best {n}')
     fig5 = go.Figure(data=[go.Pie(labels=names, values=best5.values)])
@@ -142,7 +149,7 @@ elif page == pages[3]:
 
     st.markdown('Top 5 Products sells with Product X')
 
-    x = st.selectbox('Choose X:', df['ProductID'].unique())
+    x = st.selectbox('Choose X:', get_product_names(df['ProductID'].unique().tolist()))
     products_series = df.groupby(['OrderID'])['ProductID'].transform(lambda x : ','.join(x))
 
 
@@ -158,6 +165,6 @@ elif page == pages[3]:
 
     st.write(f'The Top 5 Products sells with {x} ascendingly: ')
     k = list(sorted_asscociation_dic.keys())[-6:-1]
-    names = [df2[df2['ProductID'] == i]['ProductName'].values[0] for i in k]
+    names = get_product_names(k)
     fig6 = go.Figure(data=[go.Bar(x=names, y=list(sorted_asscociation_dic.values())[-6:-1] )])
     st.plotly_chart(fig6)
