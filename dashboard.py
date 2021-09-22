@@ -165,6 +165,6 @@ elif page == pages[3]:
 
     st.write(f'The Top 5 Products sells with {x} ascendingly: ')
     k = list(sorted_asscociation_dic.keys())[-6:-1]
-    names = get_product_name(k)
-    fig6 = go.Figure(data=[go.Bar(x=names, y=list(sorted_asscociation_dic.values())[-6:-1] )])
+#     names = get_product_name(k)
+    fig6 = go.Figure(data=[go.Bar(x=k, y=list(sorted_asscociation_dic.values())[-6:-1] )])
     st.plotly_chart(fig6)
