@@ -13,6 +13,20 @@ st.set_page_config(
 def curr(n):
     return "${:,.2f}". format(n)
 
+def plot_table(df):
+    """
+    documentaion
+    """
+    fig = go.Figure(data=[go.Table(
+        header=dict(values=df.columns,
+                    fill_color='paleturquoise',
+                    align='left'),
+        cells=dict(values=[df[col] for col in df.columns],
+                fill_color='lavender',
+                align='left'))
+    ])
+    st.plotly_chart(fig, use_container_width=True)
+
 df = pd.read_excel('Data.xlsx')
 df['total_amount_for_order'] = df['Sales'] - df['Discount']
 
@@ -90,7 +104,7 @@ elif page == pages[2]:
     df['GrossMargin'] = (df['Sales'] - df['CostOfSales'])/df['Sales']
     n_rows = st.slider('Choose Number of Rows to View', 1, 100, 5)
     st.markdown(f'Showing {n_rows} Rows')
-    st.write(df.head(n_rows))
+    plot_table(df.head(n_rows))
 
 elif page == pages[3]:
     st.title('Products Analysis')
