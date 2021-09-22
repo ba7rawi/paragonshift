@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 
-
+pd.options.display.float_format = "{:,.2f}".format
 st.set_page_config(
     page_title="Paragon Shift",
     layout="wide",
