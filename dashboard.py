@@ -132,8 +132,10 @@ elif page == pages[3]:
     st.markdown('## The Best N Selling Products')
     n = st.slider('Choose N:', 1, df['ProductID'].unique().shape[0], 5)
     best5 = df.groupby(['ProductID']).sum()['Sales'].sort_values(ascending=False)[:n]
+    names = [df2[df2['ProductID'] == i]['ProductName'].values[0] for i in best5.index.tolist()]
+
     st.markdown(f'# Best {n}')
-    fig5 = go.Figure(data=[go.Pie(labels=best5.index.tolist(), values=best5.values)])
+    fig5 = go.Figure(data=[go.Pie(labels=names, values=best5.values)])
     st.plotly_chart(fig5)
 
     st.markdown("<hr/>",unsafe_allow_html=True)
