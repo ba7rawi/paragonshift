@@ -36,6 +36,7 @@ def get_product_name(id):
         return "Invalid Id Type"
     
 df = pd.read_excel('Data.xlsx')
+df1 = df
 df2 = pd.read_excel('Data.xlsx', 'Products')
 df3 = df1.merge(df2,on='ProductID',how='left')
 
@@ -68,7 +69,6 @@ if page == pages[0]:
     
     # 3
     st.markdown("<hr/>",unsafe_allow_html=True)
-    df1 = df
     d_cat = ((df3.groupby(['CategoryID']).sum()['Sales']/df3['Sales'].sum()) * 100).sort_values(ascending=False)
     fig1 = go.Figure(data=[go.Bar(x=d_cat.index.tolist(), y=d_cat.values)])
     st.plotly_chart(fig1)
