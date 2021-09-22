@@ -128,18 +128,18 @@ elif page == pages[3]:
     with kpi2:
         mdp = df.groupby(['ProductID']).sum()['Discount'].sort_values(ascending=False)[:1]
         st.markdown(f"### The Most Discounted Prodcut")
-        st.markdown(f"<h2 style='text-align: center;color: #d8e131;background-color: #1a322d; width: fit-content; padding:20px'>{get_product_names(mdp.index[0])}: {curr(mdp[0])}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='text-align: center;color: #d8e131;background-color: #1a322d; width: fit-content; padding:20px'>{get_product_name(mdp.index[0])}: {curr(mdp[0])}</h1>", unsafe_allow_html=True)
     
     with kpi3:
         mpp = df.groupby(['ProductID']).sum()['GrossProfit'].sort_values(ascending=False)[:1]
         st.markdown(f"### The Most Profitable Product")
-        st.markdown(f"<h2 style='text-align: center;color: #d8e131;background-color: #1a322d; width: fit-content; padding:20px'>{get_product_names(mpp.index[0])}: {curr(mpp[0])}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='text-align: center;color: #d8e131;background-color: #1a322d; width: fit-content; padding:20px'>{get_product_name(mpp.index[0])}: {curr(mpp[0])}</h1>", unsafe_allow_html=True)
 
     st.markdown("<hr/>",unsafe_allow_html=True)
     st.markdown('## The Best N Selling Products')
     n = st.slider('Choose N:', 1, df['ProductID'].unique().shape[0], 5)
     best5 = df.groupby(['ProductID']).sum()['Sales'].sort_values(ascending=False)[:n]
-    names = get_product_names(best5.index.tolist())
+    names = get_product_name(best5.index.tolist())
 
     st.markdown(f'# Best {n}')
     fig5 = go.Figure(data=[go.Pie(labels=names, values=best5.values)])
@@ -149,7 +149,7 @@ elif page == pages[3]:
 
     st.markdown('Top 5 Products sells with Product X')
 
-    x = st.selectbox('Choose X:', get_product_names(df['ProductID'].unique().tolist()))
+    x = st.selectbox('Choose X:', get_product_name(df['ProductID'].unique().tolist()))
     products_series = df.groupby(['OrderID'])['ProductID'].transform(lambda x : ','.join(x))
 
 
@@ -165,6 +165,6 @@ elif page == pages[3]:
 
     st.write(f'The Top 5 Products sells with {x} ascendingly: ')
     k = list(sorted_asscociation_dic.keys())[-6:-1]
-    names = get_product_names(k)
+    names = get_product_name(k)
     fig6 = go.Figure(data=[go.Bar(x=names, y=list(sorted_asscociation_dic.values())[-6:-1] )])
     st.plotly_chart(fig6)
