@@ -153,5 +153,7 @@ elif page == pages[3]:
     sorted_asscociation_dic = {k: v for k, v in sorted(asscociation_dic.items(), key=lambda item: item[1])}
 
     st.write(f'The Top 5 Products sells with {x} ascendingly: ')
-    fig6 = go.Figure(data=[go.Bar(x=list(sorted_asscociation_dic.keys())[-6:-1], y=list(sorted_asscociation_dic.values())[-6:-1] )])
+    k = list(sorted_asscociation_dic.keys())[-6:-1]
+    names = [df2[df2['ProductID'] == i]['ProductName'].values[0] for i in k]
+    fig6 = go.Figure(data=[go.Bar(x=names, y=list(sorted_asscociation_dic.values())[-6:-1] )])
     st.plotly_chart(fig6)
