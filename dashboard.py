@@ -28,6 +28,8 @@ def plot_table(df):
     st.plotly_chart(fig, use_container_width=True)
 
 df = pd.read_excel('Data.xlsx')
+df2 = pd.read_excel('Data.xlsx', 'Products')
+
 df['total_amount_for_order'] = df['Sales'] - df['Discount']
 
 pages = ['Sales', 'Discounts', 'Profit', 'Products']
