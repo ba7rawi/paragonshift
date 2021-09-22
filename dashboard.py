@@ -57,9 +57,11 @@ if page == pages[0]:
     
     # 3
     st.markdown("<hr/>",unsafe_allow_html=True)
-    n_items = st.slider('Number of Categories to View', 0, df['ProductID'].unique().shape[0],5) 
-    d_cat = ((df.groupby(['ProductID']).sum()['Sales']/df['Sales'].sum()) * 100).sort_values(ascending=False)
-    fig1 = go.Figure(data=[go.Bar(x=d_cat.index.tolist()[:n_items], y=d_cat.values[:n_items])])
+    df1 = df
+    df2 = pd.read_excel('Data.xlsx', 'Products')
+    df3 = df1.merge(df2,on='ProductID',how='left')
+    d_cat = ((df3.groupby(['CategoryID']).sum()['Sales']/df3['Sales'].sum()) * 100).sort_values(ascending=False)
+    fig1 = go.Figure(data=[go.Bar(x=d_cat.index.tolist(), y=d_cat.values)])
     st.plotly_chart(fig1)
     # 5
     st.markdown('### Monthly Sales')
