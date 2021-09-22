@@ -102,6 +102,7 @@ elif page == pages[2]:
 
     st.markdown('## Gross Margin')
     df['GrossMargin'] = (df['Sales'] - df['CostOfSales'])/df['Sales']
+    df['GrossMargin'] = df['GrossMargin'].astype(float)
     n_rows = st.slider('Choose Number of Rows to View', 1, 100, 5)
     st.markdown(f'Showing {n_rows} Rows')
     plot_table(df.head(n_rows))
