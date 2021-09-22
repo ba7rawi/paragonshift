@@ -150,10 +150,10 @@ elif page == pages[3]:
     st.markdown('Top 5 Products sells with Product X')
 
     x = st.selectbox('Choose X:', get_product_name(df['ProductID'].unique().tolist()))
-    products_series = df.groupby(['OrderID'])['ProductID'].transform(lambda x : ','.join(x))
+    products_series = df3.groupby(['OrderID'])['ProductName'].transform(lambda x : ','.join(x))
 
 
-    asscociation_dic = dict(zip(df['ProductID'].unique(), [0]*df['ProductID'].unique().shape[0])) 
+    asscociation_dic = dict(zip(df['ProductID'].unique(), [0]*df['ProductName'].unique().shape[0])) 
 
     for prod in products_series:
         prod_list = prod.split(',')
@@ -166,5 +166,5 @@ elif page == pages[3]:
     st.write(f'The Top 5 Products sells with {x} ascendingly: ')
     k = list(sorted_asscociation_dic.keys())[-6:-1]
     names = get_product_name(k)
-    fig6 = go.Figure(data=[go.Bar(x=k, y=list(sorted_asscociation_dic.values())[-6:-1] )])
+    fig6 = go.Figure(data=[go.Bar(x=names, y=list(sorted_asscociation_dic.values())[-6:-1] )])
     st.plotly_chart(fig6)
